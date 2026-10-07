@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CanteenGo - Smart Campus Canteen</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f5f7fb;
+      color: #222;
+    }
+
+    nav {
+      background: linear-gradient(135deg, #6c5ce7, #4834d4);
+      color: white;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: bold;
+    }
+
+    nav button {
+      background: white;
+      color: #4834d4;
+      border: none;
+      padding: 9px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      margin-left: 5px;
+      font-weight: bold;
+    }
+
+    nav button:hover {
+      background: #eee;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #6c5ce7, #4834d4);
+      color: white;
+      padding: 60px 7%;
+      border-radius: 0 0 35px 35px;
+    }
+
+    .hero h1 {
+      font-size: 45px;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      max-width: 650px;
+      line-height: 1.6;
+    }
+
+    .hero button {
+      margin-top: 25px;
+      padding: 13px 25px;
+      border: none;
+      border-radius: 25px;
+      background: white;
+      color: #4834d4;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .container {
+      width: 86%;
+      max-width: 1200px;
+      margin: 35px auto;
+    }
+
+    .section-title {
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+
+    .crowd,
+    .cart,
+    .token-box,
+    .feedback,
+    .stat-card,
+    .order-card {
+      background: white;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .crowd {
+      padding: 22px;
+      border-radius: 18px;
+      margin-bottom: 35px;
+    }
+
+    .crowd-status {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      background: #ffeaa7;
+      color: #856404;
+      font-weight: bold;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    .categories {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 25px;
+    }
+
+    .categories button {
+      padding: 9px 18px;
+      border: none;
+      background: white;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .categories button:hover {
+      background: #6c5ce7;
+      color: white;
+    }
+
+    .food-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .food-card {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+      transition: 0.3s;
+    }
+
+    .food-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .food-image {
+      height: 150px;
+      background: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 65px;
+    }
+
+    .food-content {
+      padding: 17px;
+    }
+
+    .food-content h3 {
+      margin-bottom: 8px;
+    }
+
+    .price {
+      font-weight: bold;
+      color: #6c5ce7;
+      font-size: 18px;
+      margin-top: 5px;
+    }
+
+    .food-content button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      margin-top: 12px;
+      background: #6c5ce7;
+      color: white;
+      cursor: pointer;
+    }
+
+    .food-content button:hover {
+      background: #4834d4;
+    }
+
+    .sold {
+      background: #ddd !important;
+      color: #777 !important;
+      cursor: not-allowed !important;
+    }
+
+    .cart {
+      padding: 25px;
+      margin-top: 40px;
+      border-radius: 18px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .remove-btn {
+      margin-left: 10px;
+      border: none;
+      background: #ff7675;
+      color: white;
+      padding: 5px 8px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .checkout {
+      width: 100%;
+      padding: 13px;
+      background: #00b894;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      margin-top: 20px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .checkout:hover {
+      background: #009f7f;
+    }
+
+    .token-box {
+      display: none;
+      padding: 30px;
+      margin-top: 30px;
+      border-radius: 20px;
+      text-align: center;
+    }
+
+    .token {
+      font-size: 45px;
+      font-weight: bold;
+      color: #6c5ce7;
+      margin: 15px;
+    }
+
+    .dashboard {
+      margin-top: 50px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 18px;
+    }
+
+    .stat-card {
+      padding: 25px;
+      border-radius: 18px;
+    }
+
+    .stat-card h2 {
+      color: #6c5ce7;
+      margin-top: 10px;
+    }
+
+    .orders {
+      margin-top: 30px;
+    }
+
+    .order-card {
+      padding: 20px;
+      margin-bottom: 15px;
+      border-radius: 15px;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 15px;
+      background: #ffeaa7;
+      margin-top: 10px;
+    }
+
+    .order-card button {
+      padding: 8px 12px;
+      margin-top: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #4834d4;
+      color: white;
+      cursor: pointer;
+    }
+
+    .feedback {
+      padding: 25px;
+      border-radius: 18px;
+      margin-top: 35px;
+    }
+
+    .stars {
+      font-size: 30px;
+      margin: 15px 0;
+    }
+
+    .stars span {
+      cursor: pointer;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      resize: none;
+    }
+
+    .feedback button {
+      padding: 11px 20px;
+      background: #6c5ce7;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      margin-top: 12px;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      background: #222;
+      color: white;
+      padding: 25px;
+      margin-top: 50px;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      nav {
+        padding: 15px;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      nav button {
+        padding: 7px 10px;
+        font-size: 12px;
+      }
+
+      .container {
+        width: 92%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="logo">🍔 CanteenGo</div>
+
+    <div>
+      <button onclick="scrollToSection('menu')">Menu</button>
+      <button onclick="scrollToSection('cart')">Cart 🛒</button>
+      <button onclick="scrollToSection('dashboard')">Dashboard</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Order Faster. Skip the Queue.</h1>
+
+    <p>
+      CanteenGo is a smart campus canteen system that helps students
+      pre-order food, get digital tokens and collect food without
+      wasting their lunch break in long queues.
+    </p>
+
+    <button onclick="scrollToSection('menu')">
+      Order Food 🍔
+    </button>
+  </section>
+
+  <div class="container">
+
+    <!-- CROWD STATUS -->
+    <section class="crowd">
+      <h2>🍽️ Live Canteen Status</h2>
+
+      <p id="queueText">Checking current crowd...</p>
+
+      <span class="crowd-status" id="crowdStatus">
+        🟡 Medium Crowd
+      </span>
+    </section>
+
+    <!-- MENU -->
+    <section id="menu">
+      <h2 class="section-title">🍔 Today's Menu</h2>
+
+      <input
+        type="text"
+        class="search-box"
+        placeholder="Search food..."
+        onkeyup="searchFood()"
+        id="search"
+      >
+
+      <div class="categories">
+        <button onclick="filterFood('all')">All</button>
+        <button onclick="filterFood('Meals')">Meals</button>
+        <button onclick="filterFood('Snacks')">Snacks</button>
+        <button onclick="filterFood('Drinks')">Drinks</button>
+      </div>
+
+      <div class="food-grid" id="foodGrid"></div>
+    </section>
+
+    <!-- CART -->
+    <section class="cart" id="cart">
+      <h2>🛒 Your Cart</h2>
+
+      <div id="cartItems">
+        <p>Your cart is empty.</p>
+      </div>
+
+      <h3 id="total">Total: ₹0</h3>
+
+      <button class="checkout" onclick="placeOrder()">
+        Place Order 🎟️
+      </button>
+    </section>
+
+    <!-- TOKEN -->
+    <section class="token-box" id="tokenBox">
+      <h2>🎉 Order Confirmed!</h2>
+
+      <p>Your digital token is:</p>
+
+      <div class="token" id="tokenNumber">
+        A101
+      </div>
+
+      <p id="orderStatus">
+        🟡 Order Accepted
+      </p>
+
+      <p>
+        Please collect your food when the order becomes ready.
+      </p>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section class="dashboard" id="dashboard">
+
+      <h2 class="section-title">
+        📊 CanteenGo Dashboard
+      </h2>
+
+      <div class="stats">
+
+        <div class="stat-card">
+          <p>Today's Orders</p>
+          <h2 id="ordersCount">128</h2>
+        </div>
+
+        <div class="stat-card">
+          <p>Pending Orders</p>
+          <h2 id="pendingCount">18</h2>
+        </div>
+
+        <div class="stat-card">
+          <p>Ready Orders</p>
+          <h2>7</h2>
+        </div>
+
+        <div class="stat-card">
+          <p>Completed</p>
+          <h2>103</h2>
+        </div>
+
+      </div>
+
+      <!-- STAFF ORDERS -->
+      <div class="orders">
+
+        <h2>👨‍🍳 Staff Order Management</h2>
+
+        <div id="ordersList">
+
+          <div class="order-card">
+
+            <strong>Token A098</strong>
+
+            <p>2 × Meals</p>
+            <p>1 × Juice</p>
+
+            <span class="status">
+              🟡 Preparing
+            </span>
+
+            <br>
+
+            <button onclick="markReady(this)">
+              Mark Ready
+            </button>
+
+          </div>
+
+          <div class="order-card">
+
+            <strong>Token A099</strong>
+
+            <p>1 × Burger</p>
+
+            <span class="status">
+              🟡 Preparing
+            </span>
+
+            <br>
+
+            <button onclick="markReady(this)">
+              Mark Ready
+            </button>
+
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- FEEDBACK -->
+    <section class="feedback">
+
+      <h2>⭐ Give Your Feedback</h2>
+
+      <p>How was your CanteenGo experience?</p>
+
+      <div class="stars" id="stars">
+        <span onclick="rate(1)">☆</span>
+        <span onclick="rate(2)">☆</span>
+        <span onclick="rate(3)">☆</span>
+        <span onclick="rate(4)">☆</span>
+        <span onclick="rate(5)">☆</span>
+      </div>
+
+      <textarea
+        id="feedbackText"
+        rows="4"
+        placeholder="Write your feedback..."
+      ></textarea>
+
+      <button onclick="submitFeedback()">
+        Submit Feedback
+      </button>
+
+    </section>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <h3>🍔 CanteenGo</h3>
+
+    <p>
+      Smart Campus Canteen & Queue Management System
+    </p>
+
+    <p>
+      Order Faster • Skip the Queue • Enjoy Your Break
+    </p>
+  </footer>
+
+
+  <script>
+
+    // FOOD DATA
+    const foods = [
+      {
+        id: 1,
+        name: "Campus Meals",
+        price: 70,
+        category: "Meals",
+        emoji: "🍚",
+        available: true
+      },
+      {
+        id: 2,
+        name: "Veg Burger",
+        price: 50,
+        category: "Snacks",
+        emoji: "🍔",
+        available: true
+      },
+      {
+        id: 3,
+        name: "Pizza",
+        price: 60,
+        category: "Snacks",
+        emoji: "🍕",
+        available: true
+      },
+      {
+        id: 4,
+        name: "Sandwich",
+        price: 40,
+        category: "Snacks",
+        emoji: "🥪",
+        available: true
+      },
+      {
+        id: 5,
+        name: "Fresh Juice",
+        price: 25,
+        category: "Drinks",
+        emoji: "🥤",
+        available: true
+      },
+      {
+        id: 6,
+        name: "Tea",
+        price: 15,
+        category: "Drinks",
+        emoji: "☕",
+        available: true
+      }
+    ];
+
+    let cart = [];
+    let rating = 0;
+
+
+    // DISPLAY FOOD
+    function displayFood(list = foods) {
+
+      const grid = document.getElementById("foodGrid");
+
+      grid.innerHTML = "";
+
+      if (list.length === 0) {
+        grid.innerHTML = "<p>No food items found.</p>";
+        return;
+      }
+
+      list.forEach(food => {
+
+        const card = document.createElement("div");
+
+        card.className = "food-card";
+
+        card.innerHTML = `
+          <div class="food-image">
+            ${food.emoji}
+          </div>
+
+          <div class="food-content">
+
+            <h3>${food.name}</h3>
+
+            <p>${food.category}</p>
+
+            <p class="price">
+              ₹${food.price}
+            </p>
+
+            <button
+              class="${food.available ? "" : "sold"}"
+              ${food.available
+                ? `onclick="addToCart(${food.id})"`
+                : "disabled"}
+            >
+              ${food.available
+                ? "Add to Cart 🛒"
+                : "Sold Out"}
+            </button>
+
+          </div>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+
+    // ADD TO CART
+    function addToCart(id) {
+
+      const food = foods.find(item => item.id === id);
+
+      if (!food) return;
+
+      cart.push(food);
+
+      updateCart();
+
+      alert(food.name + " added to cart!");
+    }
+
+
+    // UPDATE CART
+    function updateCart() {
+
+      const cartItems =
+        document.getElementById("cartItems");
+
+      const totalElement =
+        document.getElementById("total");
+
+      if (cart.length === 0) {
+
+        cartItems.innerHTML =
+          "<p>Your cart is empty.</p>";
+
+        totalElement.innerText =
+          "Total: ₹0";
+
+        return;
+      }
+
+      cartItems.innerHTML = "";
+
+      let total = 0;
+
+      cart.forEach((item, index) => {
+
+        total += item.price;
+
+        const div =
+          document.createElement("div");
+
+        div.className = "cart-item";
+
+        div.innerHTML = `
+          <span>
+            ${item.emoji} ${item.name}
+          </span>
+
+          <span>
+            ₹${item.price}
+
+            <button
+              class="remove-btn"
+              onclick="removeItem(${index})"
+            >
+              Remove
+            </button>
+          </span>
+        `;
+
+        cartItems.appendChild(div);
+      });
+
+      totalElement.innerText =
+        "Total: ₹" + total;
+    }
+
+
+    // REMOVE ITEM
+    function removeItem(index) {
+
+      cart.splice(index, 1);
+
+      updateCart();
+    }
+
+
+    // PLACE ORDER
+    function placeOrder() {
+
+      if (cart.length === 0) {
+
+        alert(
+          "Please add food to your cart first."
+        );
+
+        return;
+      }
+
+      const token =
+        "A" + Math.floor(100 + Math.random() * 900);
+
+      document.getElementById(
+        "tokenNumber"
+      ).innerText = token;
+
+      document.getElementById(
+        "tokenBox"
+      ).style.display = "block";
+
+      document.getElementById(
+        "orderStatus"
+      ).innerText = "🟡 Order Accepted";
+
+      const ordersCount =
+        document.getElementById("ordersCount");
+
+      const pendingCount =
+        document.getElementById("pendingCount");
+
+      ordersCount.innerText =
+        parseInt(ordersCount.innerText) + 1;
+
+      pendingCount.innerText =
+        parseInt(pendingCount.innerText) + 1;
+
+      cart = [];
+
+      updateCart();
+
+      scrollToSection("tokenBox");
+
+      alert(
+        "Order placed successfully! Your token is " +
+        token
+      );
+    }
+
+
+    // SEARCH FOOD
+    function searchFood() {
+
+      const value =
+        document.getElementById("search")
+          .value
+          .toLowerCase()
+          .trim();
+
+      const filtered =
+        foods.filter(food =>
+          food.name
+            .toLowerCase()
+            .includes(value)
+        );
+
+      displayFood(filtered);
+    }
+
+
+    // CATEGORY FILTER
+    function filterFood(category) {
+
+      if (category === "all") {
+
+        displayFood(foods);
+
+      } else {
+
+        displayFood(
+          foods.filter(food =>
+            food.category === category
+          )
+        );
+      }
+    }
+
+
+    // STAFF MARK READY
+    function markReady(button) {
+
+      const card =
+        button.parentElement;
+
+      const status =
+        card.querySelector(".status");
+
+      status.innerText =
+        "🟢 Ready";
+
+      status.style.background =
+        "#55efc4";
+
+      button.innerText =
+        "Completed";
+
+      button.disabled = true;
+
+      alert(
+        "Order marked as READY!"
+      );
+    }
+
+
+    // RATING
+    function rate(value) {
+
+      rating = value;
+
+      const stars =
+        document.querySelectorAll(
+          "#stars span"
+        );
+
+      stars.forEach((star, index) => {
+
+        star.innerText =
+          index < value ? "★" : "☆";
+      });
+    }
+
+
+    // FEEDBACK
+    function submitFeedback() {
+
+      const text =
+        document.getElementById(
+          "feedbackText"
+        ).value;
+
+      if (rating === 0) {
+
+        alert(
+          "Please select a rating."
+        );
+
+        return;
+      }
+
+      if (text.trim() === "") {
+
+        alert(
+          "Please write some feedback."
+        );
+
+        return;
+      }
+
+      alert(
+        "Thank you for your feedback! ⭐"
+      );
+
+      document.getElementById(
+        "feedbackText"
+      ).value = "";
+
+      rating = 0;
+
+      document
+        .querySelectorAll("#stars span")
+        .forEach(star => {
+          star.innerText = "☆";
+        });
+    }
+
+
+    // SCROLL
+    function scrollToSection(id) {
+
+      const element =
+        document.getElementById(id);
+
+      if (element) {
+        element.scrollIntoView({
+          behavior: "smooth"
+        });
+      }
+    }
+
+
+    // QUEUE SIMULATION
+    function updateQueue() {
+
+      const queue =
+        Math.floor(Math.random() * 25) + 5;
+
+      document.getElementById(
+        "queueText"
+      ).innerText =
+        queue +
+        " orders currently waiting";
+
+      const status =
+        document.getElementById(
+          "crowdStatus"
+        );
+
+      if (queue <= 10) {
+
+        status.innerText =
+          "🟢 Low Crowd";
+
+        status.style.background =
+          "#55efc4";
+
+      } else if (queue <= 20) {
+
+        status.innerText =
+          "🟡 Medium Crowd";
+
+        status.style.background =
+          "#ffeaa7";
+
+      } else {
+
+        status.innerText =
+          "🔴 High Crowd";
+
+        status.style.background =
+          "#ff7675";
+      }
+    }
+
+
+    // INITIAL LOAD
+    displayFood();
+    updateQueue();
+
+  </script>
+
+</body>
+</html>
